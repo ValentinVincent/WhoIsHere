@@ -7,10 +7,46 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ContentView: View {
+    @State var selection = (Auth.auth().currentUser == nil) ? 1 : 0
+    @ObservedObject var model = ObservableModel.shared
+ 
     var body: some View {
-        Text("Hello, World!")
+        TabView(selection: $selection){
+            StudentsView(connected: $model.connected)
+            WelcomeView(connected: $model.connected)
+        }
+    }
+}
+
+
+struct StudentsView: View {
+    @Binding var connected: Bool
+    
+    @State var viewState = CGSize.zero
+    @State var MainviewState =  CGSize.zero
+
+    var body: some View {
+        ZStack {
+//            Color.blue.edgesIgnoringSafeArea(.all)
+            if (connected) {
+                AuthenticatedView(
+                    MainviewState: $MainviewState,
+                    viewState: $viewState
+                )
+            } else {
+                Text("Please sign in")
+            }
+        }
+        .tabItem {
+            VStack {
+                Image(systemName: "person.3")
+                Text("Students")
+            }
+        }
+        .tag(0)
     }
 }
 
