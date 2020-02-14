@@ -113,6 +113,8 @@ struct AuthenticatedView: View {
         VStack{
             AppTitleView(Title: "Home")
             Spacer()
+            Text("Students list")
+            Spacer()
             
             List(model.students) { (student) in
                 HStack {
@@ -214,4 +216,5 @@ struct WelcomeView: View {
         .tag(1)
     }
 }
+
 
